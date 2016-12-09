@@ -1,0 +1,37 @@
+<Desk>:
+    size_hint_y: None
+    size_hint_x: None
+    height: 100
+    width: 100
+    do_scale: False
+    Image:
+        source: 'desk.png'
+
+<Student>:
+    color: [0, 0, 0, 1]
+
+<SeatingChart>:
+    orientation: "vertical"
+    BoxLayout:
+        size_hint_y: 0.1
+        height: 100
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.25
+            ToggleButton:
+                id: optimize_button
+                text: "Optimize"
+                size_hint_y: 0.9
+                size_hint_x: 0.15
+                height: 100
+                on_state: if self.state == "down": root.optimize()
+                on_state: if self.state == "down": self.text = "Working..."
+                on_state: if self.state == "normal": self.text = "Optimize"
+            ProgressBar:
+                id: progress
+                size_hint_y: 0.1
+                size_hint_x: 0.15
+                height: 1
+                max: root.max_mutations
+    FloatLayout:
+        id: seating_chart

@@ -1,0 +1,188 @@
+BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.3
+
+                Label:
+                    size_hint_x: 1.5
+                    text: "Reading"
+                CheckBox:
+                    id: reading_-2
+                    group: "Reading"
+                CheckBox:
+                    id: reading_-1
+                    group: "Reading"
+                CheckBox:
+                    id: reading_0
+                    group: "Reading"
+                CheckBox:
+                    id: reading_1
+                    group: "Reading"
+                CheckBox:
+                    id: reading_2
+                    group: "Reading"
+                CheckBox:
+                    id reading_na
+                    group: "Reading"
+                    active: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.3
+
+                Label:
+                    size_hint_x: 1.5
+                    text: "Writing"
+                CheckBox:
+                    id: writing_-2
+                    group: "Writing"
+                CheckBox:
+                    id: writing_-1
+                    group: "Writing"
+                CheckBox:
+                    id: writing_0
+                    group: "Writing"
+                CheckBox:
+                    id: writing_1
+                    group: "Writing"
+                CheckBox:
+                    id: writing_2
+                    group: "Writing"
+                CheckBox:
+                    id: writing_na
+                    group: "Writing"
+                    active: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.3
+
+                Label:
+                    size_hint_x: 1.5
+                    text: "Math"
+                CheckBox:
+                    id: math_-2
+                    group: "Math"
+                CheckBox:
+                    id: math_-1
+                    group: "Math"
+                CheckBox:
+                    id: math_0
+                    group: "Math"
+                CheckBox:
+                    id: math_1
+                    group: "Math"
+                CheckBox:
+                    id: math_2
+                    group: "Math"
+                CheckBox:
+                    id: math_na
+                    group: "Math"
+                    active: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.3
+
+                Label:
+                    size_hint_x: 1.5
+                    text: "Science"
+                CheckBox:
+                    id: science_-2
+                    group: "Science"
+                CheckBox:
+                    id: science_-1
+                    group: "Science"
+                CheckBox:
+                    id: science_0
+                    group: "Science"
+                CheckBox:
+                    id: science_1
+                    group: "Science"
+                CheckBox:
+                    id: science_2
+                    group: "Science"
+                CheckBox:
+                    id: science_na
+                    group: "Science"
+                    active: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.3
+
+                Label:
+                    size_hint_x: 1.5
+                    text: "Chattiness"
+                CheckBox:
+                    id: chattiness_-2
+                    group: "Chattiness"
+                CheckBox:
+                    id: chattiness_-1
+                    group: "Chattiness"
+                CheckBox:
+                    id: chattiness_0
+                    group: "Chattiness"
+                CheckBox:
+                    id: chattiness_1
+                    group: "Chattiness"
+                CheckBox:
+                    id: chattiness_2
+                    group: "Chattiness"
+                CheckBox:
+                    id: chattiness_na
+                    group: "Science"
+                    active: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.3
+
+                Label:
+                    size_hint_x: 1.5
+                    text: "Focus"
+                CheckBox:
+                    id: focus_-2
+                    group: "Focus"
+                CheckBox:
+                    id: focus_-1
+                    group: "Focus"
+                CheckBox:
+                    id: focus_0
+                    group: "Focus"
+                CheckBox:
+                    id: focus_1
+                    group: "Focus"
+                CheckBox:
+                    id: focus_2
+                    group: "Focus"
+                CheckBox:
+                    id: focus_na
+                    group: "Focus"
+                    active: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: 0.3
+
+                Label:
+                    size_hint_x: 1.5
+                    text: "Safety"
+                CheckBox:
+                    id: safety_-2
+                    group: "Safety"
+                CheckBox:
+                    id: safety_-1
+                    group: "Safety"
+                CheckBox:
+                    id: safety_0
+                    group: "Safety"
+                CheckBox:
+                    id: safety_1
+                    group: "Safety"
+                CheckBox:
+                    id: safety_2
+                    group: "Safety"
+                CheckBox:
+                    id: safety_na
+                    group: "Safety"
+                    active: True

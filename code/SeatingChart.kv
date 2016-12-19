@@ -59,7 +59,6 @@
                 screen_manager.transition.direction = "left"
                 screen_manager.current = "conflicts_screen"
 
-
 <SeatingChartScreen>:
     BoxLayout:
         orientation: "vertical"
@@ -97,6 +96,7 @@
             height: 500
 
             Button:
+                id: student_drop_down_button
                 size_hint_y: 0.3
                 text: "All Students"
 
@@ -146,6 +146,14 @@
                     text: "N/A"
 
             Attribute:
+                id: reading
+                attribute: "Reading"
+
+            Attribute:
+                id: writing
+                attribute: "Writing"
+
+            Attribute:
                 id: math
                 attribute: "Math"
 
@@ -171,7 +179,7 @@
 
                 Button:
                     text: "Save"
-                    on_press: root.parent.save_student()
+                    on_press: root.parent.parent.save_student()
 
                 Button:
                     id: seating_chart_button
@@ -181,20 +189,32 @@
                         root.manager.current = "seating_chart_screen"
 
 <DistractionsScreen>:
-    BoxLayout:
-        GridLayout:
-        Label:
-        GridLayout:
+    ScrollView:
+        do_scroll_x: False
 
-    Label:
-        text: "Distractions"
+    BoxLayout:
+        BoxLayout:
+            orientation: "vertical"
+            id: left
+        Label:
+            text: "Distractions"
+        BoxLayout:
+            orientation: "vertical"
+            id: right
 
 <ConflictsScreen>:
-    Label:
-        text: "Conflicts"
+    ScrollView:
+        do_scroll_x: False
 
-<StudentStacks>:
-
+    BoxLayout:
+        BoxLayout:
+            orientation: "vertical"
+            id: left
+        Label:
+            text: "Conflicts"
+        BoxLayout:
+            orientation: "vertical"
+            id: right
 
 <Attribute>:
     orientation: "horizontal"
@@ -205,23 +225,29 @@
         size_hint_x: 1.5
         text: root.attribute
     CheckBox:
+        allow_no_selection: False
         group: root.attribute
-        on_active: self.value = -2
+        on_active: self.value = -2.0
     CheckBox:
+        allow_no_selection: False
         group: root.attribute
-        on_active: self.value = -1
+        on_active: self.value = -1.0
     CheckBox:
+        allow_no_selection: False
         group: root.attribute
-        on_active: self.value = 0
+        on_active: self.value = 0.0
     CheckBox:
+        allow_no_selection: False
         group: root.attribute
-        on_active: self.value = 1
+        on_active: self.value = 1.0
     CheckBox:
+        allow_no_selection: False
         group: root.attribute
-        on_active: self.value = 2
+        on_active: self.value = 2.0
     CheckBox:
+        allow_no_selection: False
         group: root.attribute
-        on_active: self.value = 0
+        on_active: self.value = 0.0
         active: True
 
 <Desk>:

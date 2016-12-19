@@ -37,51 +37,71 @@ class SeatingChartApp(App):
 
 
 class MainScreen(BoxLayout):
-    pass
-
-
-class CustomScreenManager(ScreenManager):
     def __init__(self, **kwargs):
-        super(CustomScreenManager, self).__init__(**kwargs)    # Call the superclass __init__()
+        super(MainScreen, self).__init__(**kwargs)    # Call the superclass __init__()
         self.students = {}  # Start a dictionary for all of the students
+
+        self.student_drop_down = DropDown()
+        self.ids.student_screen.ids.student_drop_down_button.bind(on_release=self.student_drop_down.open)
+        self.student_drop_down.bind(on_select=lambda  instance, x: setattr(self.ids.student_screen.ids.student_drop_down_button, "text", x))
 
     def save_student(self):
         name = self.ids.student_screen.ids.student_name.text
-        board = self.ids.student_screen.ids.close_to_board
-        reading_value = self.ids.student_screen.ids.reading.value
-        writing_value = self.ids.student_screen.ids.writing.value
-        math_value = self.ids.student_screen.ids.math.value
-        science_value = self.ids.student_screen.ids.science.value
-        chattiness_value = self.ids.student_screen.ids.chattiness.value
-        focus_value = self.ids.student_screen.ids.focus.value
-        safety_value = self.ids.student_screen.ids.safety.value
 
-        if name in self.students:
-            # Fix and update this section to use the get_att() and set_att() functions with a list
-            self.students[name].close_to_board = board
-            self.students[name].reading = reading_value
-            self.students[name].writing = writing_value
-            self.students[name].math = math_value
-            self.students[name].science = science_value
-            self.students[name].chattiness = chattiness_value
-            self.students[name].focus = focus_value
-            self.students[name].safety = safety_value
+        property_values = []    # Pull all of the properties from the screen and store them in a list
+        property_values.append(self.ids.student_screen.ids.close_to_board)
+        property_values.append(self.ids.student_screen.ids.reading.value)
+        property_values.append(self.ids.student_screen.ids.writing.value)
+        property_values.append(self.ids.student_screen.ids.math.value)
+        property_values.append(self.ids.student_screen.ids.science.value)
+        property_values.append(self.ids.student_screen.ids.chattiness.value)
+        property_values.append(self.ids.student_screen.ids.focus.value)
+        property_values.append(self.ids.student_screen.ids.safety.value)
 
-        else:
-            # Fix and update this section to use the get_att() and set_att() functions with a list
-            student = Student1()
-            student.name = name
-            student.close_to_board = board
-            student.reading = reading_value
-            student.writing = writing_value
-            student.math = math_value
-            student.science = science_value
-            student.chattiness = chattiness_value
-            student.focus = focus_value
-            student.safety = safety_value
+        if name in self.students:   # If the student is already in the dictionary...
+            for i, prop in enumerate(self.students[name].properties):   # Go through each property...
+                setattr(self.students[name], prop, property_values[i])  # and set the property to the right value
 
-            self.add_widget(student)    # Add the student screen to the screen manager
-            self.students[student.name] = student   # Add the student screen to the dictionary of students
+        else:   # If the student is not already in the dictionary...
+            student = Student1()    # Make a new student screen object
+            student.name = name     # Set the name of the student
+
+            for i, prop in enumerate(student.properties):   # Go through each property...
+                setattr(student, prop, property_values[i])  # and set the property to the right value
+
+            self.ids.screen_manager.add_widget(student)    # Add the student screen to the screen manager
+            self.add_student_button(student.name, self.ids.distractions_screen) # Make and add a button to the distractions screens
+            self.add_student_button(student.name, self.ids.conflicts_screen)    # Make and add a button to the conflicts screens
+            self.add_student_to_drop_down(student.name)     # Add the student to the drop down of students
+            self.students[student.name] = student           # Add the student screen to the dictionary of students
+
+    def add_student_button(self, name, screen):
+        btn_left = ToggleButton()       # Make a button for the left side of the screens
+        btn_left.text = name            # Set the text of the button to the students name
+        btn_left.size_hint_y = None     # Change the vertical height of the button
+        btn_left.height = 40            # Set the height of the button
+        btn_left.group = screen.name    # Set the group of the button
+
+        btn_right = ToggleButton()      # Make a button for the right side of the screens
+        btn_right.text = name           # Set the text of the button to the students name
+        btn_right.size_hint_y = None    # Change the vertical height of the button
+        btn_right.height = 40           # Set the height of the button
+
+        screen.ids.left.add_widget(btn_left)                # Add the button to the left side of the screen
+        screen.ids.right.add_widget(btn_right)              # Add the button to the left side of the screen
+
+    def add_student_to_drop_down(self, name):
+        btn_drop_down = Button()  # Make a button for the drop down menus
+        btn_drop_down.text = name  # Set the text of the button to the students name
+        btn_drop_down.size_hint_y = None  # Change the vertical height of the button
+        btn_drop_down.height = 40  # Set the height of the button
+        btn_drop_down.bind(on_release=lambda btn_drop_down: self.student_drop_down.select(btn_drop_down.text))
+
+        self.student_drop_down.add_widget(btn_drop_down)    # Add the button to the drop down
+
+
+class CustomScreenManager(ScreenManager):
+    pass
 
 
 class SeatingChartScreen(Screen):
@@ -220,16 +240,11 @@ class SeatingChartScreen(Screen):
         self.ids["progress"].value = 0  # Set the progress bar back to 0
 
     def optimize(self):
-        self.shuffle_students() # Shuffle the students
         Clock.schedule_interval(self.mutate, 1/100.)    # Start mutating
 
 
 class StudentScreen(Screen):
-    def __init__(self, **kwargs):
-        super(StudentScreen, self).__init__(**kwargs)    # Call the superclass __init__()
-
-        # A list of the attributes we will compare
-        self.att_list = ["reading_pro", "math_pro", "chattiness", "focus", "safety"]
+    pass
 
 
 class DistractionsScreen(Screen):
@@ -242,25 +257,18 @@ class ConflictsScreen(Screen):
 
 class Student1(Screen):
     def __init__(self, **kwargs):
-        super(Student, self).__init__(**kwargs)    # Call the superclass __init__()
+        super(Student1, self).__init__(**kwargs)    # Call the superclass __init__()
         self.name = ""  # Student's name
-        self.close_to_board = False  # Does the student need to be close to the teacher?
+        self.properties = ["close_to_board", "reading", "writing", "math", "science", "chattiness", "focus", "safety"]
 
-        self.distractions = []  # A list of other students that distract this student
-        self.conflicts = [] # A list of other students that are in conflict with this student
-
-        # The following attributes are rated on a -1 to 1 scale.
-        # -1: Significantly bellow standard
-        #  0: Bellow standard
-        #  1: At or above standard
-        self.reading = 0        # Reading proficiency
-        self.math = 0           # Math proficiency
-        self.chattiness = 0     # Student's chattiness
-        self.focus = 0          # Student's ability to ignore unexpected behavior and focus on their work
-        self.safety = 0         # Student's safety with others and self
+        for prop in self.properties:
+            if prop == "close_to_board":
+                setattr(self, prop, False)
+            else:
+                setattr(self, prop, 0)
 
 
-class StudentStacks(BoxLayout):
+class StudentDropDown(DropDown):
     pass
 
 

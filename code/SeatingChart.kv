@@ -83,6 +83,13 @@
                     size_hint_y: 0.1
                     max: root.max_mutations
 
+            Button:
+                id: shuffle
+                text: "Shuffle"
+                on_release:
+                    root.stop_mutation()
+                    root.shuffle_students()
+
         FloatLayout:
             id: seating_chart
 
@@ -99,6 +106,8 @@
                 id: student_drop_down_button
                 size_hint_y: 0.3
                 text: "All Students"
+                on_press: root.parent.parent.create_student_drop_down()
+                on_release: root.parent.parent.display_student_drop_down()
 
             GridLayout:
                 cols: 2

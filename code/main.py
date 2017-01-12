@@ -41,9 +41,9 @@ class MainScreen(BoxLayout):
         super(MainScreen, self).__init__(**kwargs)    # Call the superclass __init__()
         self.students = {}  # Start a dictionary for all of the students
 
-        self.student_drop_down = DropDown()
+        self.student_drop_down = DropDown() # Make a drop down for the student screens
         self.ids.student_screen.ids.student_drop_down_button.bind(on_release=self.student_drop_down.open)
-        self.student_drop_down.bind(on_select=lambda  instance, x: setattr(self.ids.student_screen.ids.student_drop_down_button, "text", x))
+        self.student_drop_down.bind(on_select=lambda instance, x: setattr(self.ids.student_screen.ids.student_drop_down_button, "text", x))
 
     def save_student(self):
         name = self.ids.student_screen.ids.student_name.text
@@ -98,6 +98,22 @@ class MainScreen(BoxLayout):
         btn_drop_down.bind(on_release=lambda btn_drop_down: self.student_drop_down.select(btn_drop_down.text))
 
         self.student_drop_down.add_widget(btn_drop_down)    # Add the button to the drop down
+
+    def create_student_drop_down(self):
+        # Clear any buttons from the current drop down
+        self.student_drop_down.clear_widget()
+
+        # Create the drop down that shows all of the students
+        for key in self.students:
+            btn = Button()
+            btn.text = key
+
+            btn.size_hint_y = None
+            btn.height = 40
+            btn.bind(on_release=lambda btn: self.student_drop_down.select(btn.text))
+
+    def display_student_drop_down(self):
+        pass
 
 
 class CustomScreenManager(ScreenManager):
